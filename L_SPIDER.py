@@ -2,9 +2,10 @@ import urllib.request
 import urllib.parse
 import random
 import re
-import time
 import gzip
 from io import StringIO
+import sys
+
 
 class SPIDER():
     def __init__(self,aim_url,k):
@@ -14,6 +15,7 @@ class SPIDER():
         self.html = ''
         self.aim_list = []
         self.deep_list = []
+        self.non_bmp_map = dict.fromkeys(range(0x10000,sys.maxunicode + 1),0xfffd)#解决'UCS-2' codec can't encode characters
     def url_open(self,url):
         '''伪造报头和代理IP访问URL并返回值(默认二进制)'''
         ip_list = list(set(open('ip.txt','r').read().split('\n')))
@@ -91,11 +93,15 @@ class SPIDER():
     def show_aim_list(self):
         """逐个输出目标的URL"""
         if type(self.aim_list) == list:
+            s = ''
             for url in self.aim_list:
                 try:
                     print(url)
-                except UnicodeEncodeError:
-                    print('MD又是编码错误')
+                except UnicodeEncodeError as e:
+                    s = e
+                    print(str(url).translate(self.non_bmp_map))#解决'UCS-2' codec can't encode characters
+            if s!= '':
+                print('其中的乱码原因是这个:',s)  
         else :
             print('居然不是列表？')
     def crawl(self):
@@ -122,21 +128,28 @@ class SPIDER():
                 aim_list.append(url)
                 print('下载出现问题。问题原因如下：',e)
     
-    def keep_data_by_pages(self,page=1,f_url='',b_url='',separator=','):
+    def keep_data_by_pages(self,page=1,f_url='',b_url='',separator=',',page_wd=1):
         '''分页爬取并保存数据'''
         for n in range(1,page+1):
-            self.aim_url = f_url + str(n) +b_url
+            self.aim_url = f_url + str(n*page_wd) +b_url
             self.html = self.url_open(self.aim_url).decode('utf-8')
             print(f'得到第{n}页的HTML')
             self.get_aim_list()
-            with open('data.txt','a+')as f:
+            with open('data.txt','a+',encoding='utf-8')as f:
                 for i in self.aim_list:
                     if type(i) == str:
-                        f.write(i+'\n')
-                        print('写入数据：',i)
+                        try:
+                            f.write(i+'\n')
+                            print('写入数据：',i)
+                        except Exception as e:
+                            f.write(str(i).translate(self.non_bmp_map)+'\n')
+                            print('没法打印出来但是已经UCS-2格式写入了~',e)
                     elif type(i) == tuple:
                         f.write(separator.join(list(i))+'\n')
-                        print('写入数据：'+separator.join(list(i)))
+                        try:
+                            print('写入数据：'+separator.join(list(i)))
+                        except Exception as e:
+                            print('元组写入嘛。。我建议你还是重新去看正则吧',e)
     def deep_crawl(self,k_deep):
         for url in self.aim_list:
             deep_html = self.url_open(url).decode('utf-8')
@@ -144,5 +157,7 @@ class SPIDER():
             print(ls)
             self.deep_list.extend(ls)
         print(self.deep_list)
+        
 if __name__ == "__main__":
     print('ssln . i am just a spider object.')
+

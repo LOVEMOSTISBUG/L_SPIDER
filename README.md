@@ -1,4 +1,5 @@
 # L_SPIDER
+==========
       A spider with some methods that been used to crawling data like news and title or pic ,and another things which not encode in  Complex algorithm（well,the truth is i do not learn about it ,if someday i got it ,a new spider will been creat ,i promise.）
 At very first i code this just for help my friend to finish thier subject , and by the way training my programing capacity.
 But more i try to improve and perfect ,more i astounded about pentent ablity of SPIDER.

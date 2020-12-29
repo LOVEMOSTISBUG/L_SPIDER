@@ -1,4 +1,5 @@
 # L_SPIDER
+****
 A spider with some methods that been used to crawling data like news and title or pic ,and another things which not encode in  Complex algorithm（well,the truth is i do not learn about it ,if someday i got it ,a new spider will been creat ,i promise.）<br>
 At very first i code this just for help my friend to finish thier subject , and by the way training my programing capacity<br>.
 But more i try to improve and perfect ,more i astounded about pentent ablity of SPIDER.<br>
@@ -15,6 +16,7 @@ _牛X的数据杀手，你可以分析任何事物通过使用魔术算法和你
 还有的话其实是我也想造个轮子自己玩（小声bb）<br>
 希望我的代码能帮你省去一些烦恼，就像我帮助我的朋友一样，祝你好运，伙计。😇<br>
                                                                                                                                             __LOVEMOSTISBUG__  <br>
+****
 # Some things you maybe want know
 ****
 **you are been ban.respect~**<br>
@@ -24,4 +26,26 @@ _牛X的数据杀手，你可以分析任何事物通过使用魔术算法和你
 **web server was boom.respect~**<br>
 ****
 ![bad news](https://github.com/LOVEMOSTISBUG/L_SPIDER/blob/main/Test_pic/bad_news.png)  
+****
+# How to crawl
+****
+crawl by pages 一页一页爬
+****
+```python
+from L_SPIDER import SPIDER
+import re
+import urllib.parse
+
+k_aim = re.compile('''((?:(?:.).*?)) 
+        </div>''')        
+#爬一页的帖的标题  Title of 1 pages's post 
+tieba = urllib.parse.quote('钓鱼')
+b = SPIDER(f'https://tieba.baidu.com/f?kw={tieba}&ie=utf-8',k_aim)
+print(b.get_html())
+#ls = b.get_aim_list()
+b.show_aim_list()
+
+#爬50页的帖的标题并保存为data.txt  Title of 50 pages's post and save as data.txt
+b.keep_data_by_pages(50,f'https://tieba.baidu.com/f?kw={tieba}&ie=utf-8&pn=',page_wd=50)
+```
 ****

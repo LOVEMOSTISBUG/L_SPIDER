@@ -17,9 +17,11 @@ _牛X的数据杀手，你可以分析任何事物通过使用魔术算法和你
                                                                                                                                             __LOVEMOSTISBUG__  <br>
 # Some things you maybe want know
 ****
-this is you are been ban.respect~<br>
+**you are been ban.respect~**<br>
+****
 ![bad news](https://github.com/LOVEMOSTISBUG/L_SPIDER/blob/main/Test_pic/hope_you_luck.png)  
 ****
-this is web server was boom.respect~<br>
+**web server was boom.respect~**<br>
+****
 ![bad news](https://github.com/LOVEMOSTISBUG/L_SPIDER/blob/main/Test_pic/bad_news.png)  
 ****

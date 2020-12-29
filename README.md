@@ -21,11 +21,11 @@ _牛X的数据杀手，你可以分析任何事物通过使用魔术算法和你
 ****
 **you are been ban.respect~**<br>
 ****
-![bad news](https://github.com/LOVEMOSTISBUG/L_SPIDER/blob/main/Test_pic/hope_you_luck.png)  
+![hope_you_luck](https://github.com/LOVEMOSTISBUG/files/tree/main/pic/hope_you_luck.png)  
 ****
 **web server was boom.respect~**<br>
 ****
-![bad news](https://github.com/LOVEMOSTISBUG/L_SPIDER/blob/main/Test_pic/bad_news.png)  
+![bad news](https://github.com/LOVEMOSTISBUG/files/tree/main/pic/bad_news.png)  
 ****
 # How to crawl
 ****

@@ -15,3 +15,4 @@ _牛X的数据杀手，你可以分析任何事物通过使用魔术算法和你
 还有的话其实是我也想造个轮子自己玩（小声bb）<br>
 希望我的代码能帮你省去一些烦恼，就像我帮助我的朋友一样，祝你好运，伙计。😇<br>
                                                                                                                                             __LOVEMOSTISBUG__  <br>
+![bad news](https://github.com/LOVEMOSTISBUG/L_SPIDER/blob/main/Test_pic/bad_news.png"你绝不会像看到这个")  

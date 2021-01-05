@@ -60,10 +60,10 @@ if __name__ == '__main__':
 ```python
 k_aim = re.compile('''前面的特征((?:(?:.).*?))后面的特征''')
 ```
-emmm我觉得都来爬虫了文本操作什么的应该都会了吧所以不多说了。
+emmm我觉得都来爬虫了文本操作什么的应该都会了吧所以不多说了。<br>
 其中效果如下：
 ****
-![hope_you_luck](https://github.com/LOVEMOSTISBUG/another_files/blob/main/tieba1.PNG)  
+![hope_you_luck](https://github.com/LOVEMOSTISBUG/another_files/blob/main/tieba0.PNG)  
 ****
 
 ****

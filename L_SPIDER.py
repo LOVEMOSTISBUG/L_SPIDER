@@ -95,13 +95,7 @@ class SPIDER():
         if type(self.aim_list) == list:
             s = ''
             for url in self.aim_list:
-                try:
-                    print(url)
-                except UnicodeEncodeError as e:
-                    s = e
-                    print(str(url).translate(self.non_bmp_map))#解决'UCS-2' codec can't encode characters
-            if s!= '':
-                print('其中的乱码原因是这个:',s)  
+                self.L_print(url)  
         else :
             print('居然不是列表？')
     def crawl(self):
@@ -139,24 +133,57 @@ class SPIDER():
                 for i in self.aim_list:
                     if type(i) == str:
                         try:
-                            f.write(i+'\n')
-                            print('写入数据：',i)
+                            f.write(i.lstrip()+'\n')
+                            print('写入数据：',i.lstrip())
                         except Exception as e:
-                            f.write(str(i).translate(self.non_bmp_map)+'\n')
-                            print('没法打印出来但是已经UCS-2格式写入了~',e)
+                            f.write(i.lstrip()+'\n')
+                            print('没法打印出来但是已经格式写入了~',e)
                     elif type(i) == tuple:
                         f.write(separator.join(list(i))+'\n')
                         try:
                             print('写入数据：'+separator.join(list(i)))
                         except Exception as e:
                             print('元组写入嘛。。我建议你还是重新去看正则吧',e)
-    def deep_crawl(self,k_deep):
+    def deep_crawl(self,k_deep,f_url='',b_url=''):
+        '''深入挖掘数据'''
         for url in self.aim_list:
-            deep_html = self.url_open(url).decode('utf-8')
+            deep_html = self.url_open(f_url+url+b_url).decode('utf-8')
             ls =list(set(re.findall(k_deep,deep_html)))
-            print(ls)
+            if ls == []:
+                print('深入爬啥也没爬到。。')
+                L_print(url)
+            for i in ls:
+                self.L_print(i,False)
             self.deep_list.extend(ls)
-        print(self.deep_list)
+        return self.deep_list
+    
+    def deep_crawl_and_save(self,k_deep,k_file_name,f_url='',b_url=''):
+        '''深入挖掘数据并且保存'''
+        for url in self.aim_list:
+            deep_html = self.url_open(f_url+url+b_url).decode('utf-8')
+            ls =list(set(re.findall(k_deep,deep_html)))
+            name = list(set(re.findall(k_file_name,deep_html)))[0] + '.txt'
+            with open ('data/'+name,'a+',encoding='utf-8')as f:
+                self.L_print('正在写入文件：',name)
+                for i in ls:
+                    f.write(i.lstrip()+'\n')
+                    self.L_print('写入数据：'+ i.lstrip())
+            self.deep_list.extend(ls)
+        return self.deep_list    
+    
+    def L_print(self,content,warning=False):
+        '''打印出来偶尔会编码错误时用到的print'''
+        s = ''
+        try:
+            print(content)
+        except UnicodeEncodeError as e:
+            s = e
+            print('打印编码错误')
+            #print(str(content).translate(self.non_bmp_map))#解决'UCS-2' codec can't encode characters
+        if s!= '':
+            if warning:
+                print('其中的乱码原因是这个:',s)
+
         
 if __name__ == "__main__":
     print('ssln . i am just a spider object.')

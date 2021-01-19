@@ -39,18 +39,17 @@ k_aim = re.compile('''errer" href="((?:(?:.).*?))" title="(?:(?:.).*?)"''')
 k_aim_deep= r'''j_d_post_content " style="display:;">((?:(?:.).*?))<'''
 k_aim_deep_file_name =re.compile(r'''<title>((?:(?:.).*?))</title>''')
 tieba = urllib.parse.quote('抗压背锅')
-
-def run(page):
-    b = SPIDER(f'https://tieba.baidu.com/f?kw={tieba}&ie=utf-8&pn={page}',k_aim)
-    b.get_html()
-    ls = b.get_aim_list()
-    b.show_aim_list()
+page = 50
+b = SPIDER(f'https://tieba.baidu.com/f?kw={tieba}&ie=utf-8&pn={str(page)}',k_aim)
+b.get_html()
+ls = b.get_aim_list()
+b.show_aim_list()
+def run(urls):
     b.deep_crawl_and_save(k_aim_deep,k_aim_deep_file_name,f_url='https://tieba.baidu.com')
 
-pages = [i for i in range(50,1001,50)]
 if __name__ == '__main__':
     p = mp.Pool(10)
-    rel = p.map(run,pages)
+    rel = p.map(run,ls)
     p.close()
     p.join()
 ```

@@ -157,7 +157,7 @@ class SPIDER():
                 elif type(i) == tuple:
                     f.write(separator.join(list(i))+'\n')
                     self.L_print('写入数据：'+ separator.join(list(i)))
-s
+
     def keep_data_by_pages(self,page=1,f_url='',b_url='',separator=',',page_wd=1):
         '''分页爬取并保存数据'''
         for n in range(1,page+1):

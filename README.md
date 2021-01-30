@@ -26,7 +26,66 @@ _牛X的数据杀手，你可以分析任何事物通过使用魔术算法和你
 
 # How to crawl 游戏开始
 ****
-skip 跳过教程 我们搞快点
+SPIDER这个类里的函数我来解释一下吧。<br>
+初始定义时需要两个参数，一个是目标url还有便是目标的正则。<br>
+url_open就是伪造报头和代理IP访问URL并返回值(默认二进制)<br>
+get_html访问本身地址并返回且保存URL<br>
+show_html输出本身地址HTML<br>
+get_aim_list访问本身地址并返回且保存目标URL列表<br>
+show_aim_list逐个输出目标的URL<br>
+一般是先用crawl初始化基本的HTML和目标URL列表当然看你具体需求，代码已经尽量简略好不损失自由度了个人觉得。<br>
+L_print是因为某些字符无法打印出来又不想报错写的类似print函数<br>
+download就是download 参数有目标url和保存到文件夹，默认是根目录<br>
+keep_data_one_page只保存一页的数据 参数为url和爬取一次得到的是元组时的分隔符号<br>
+keep_data_by_pages参数为爬取页数 前段url和后段url（中间夹着页数） 还有分隔符号 以及页数跨度<br>
+deep_crawl 首先是深入爬的正则 还有就是前段url和后段url<br>
+deep_crawl_and_save 深入爬的正则 保存文件夹 还有就是前段url和后段url<br>
+
+## TASK 0 如果你只是轻量级的爬取 <br>比如接下来的爬取新闻网站带有Chinese的所有新闻标题<br> 你甚至不需要用到我写的类<br>直接这样就行<br>当然 用我的也能很不错的完成任务 ~能帮你剩下些时间去干其他事情
+```python
+import urllib.request
+import urllib.parse
+import random
+import re
+import time
+
+def url_open(url):
+    my_headers = list(set(open('user_agent.txt','r').read().split('\n')))
+    iplist = list(set(open('ip.txt','r').read().split('\n')))
+    my_ip = random.choice(iplist)
+    my_head = random.choice(my_headers)
+    print (my_ip+'\n'+my_head+'\n')
+    iplist =list(set(open('ip.txt','r').read().split('\n')))
+    proxy_support = urllib.request.ProxyHandler({'http':my_ip})
+    opener = urllib.request.build_opener(proxy_support)
+    opener.addheaders = [('User-Agent',my_head)]
+    urllib.request.install_opener(opener)
+    req = urllib.request.Request(url)
+    response = urllib.request.urlopen(req)
+    html1 = response.read()
+    return html1
+
+def gkd(url,k):
+    c = re.findall(k,url_open(url).decode('utf-8'))
+    c=list(set(c))
+    return c
+
+k1 = re.compile(r'class="story-txt">\r\n\t\t\t\t\t\t((?:.).*?)\t\t\t\t\t</div>')
+for i in range(1,200):
+    url2 = 'https://globalnews.ca/gnca-ajax/search-results/%7B%22term%22:%22china%22,%22type%22:%22news%22,%22page%22:'+str(i)+'%7D/'
+    t = gkd(url2,k1)
+    for i in t:
+        b = str(i).replace('&#039;','\'')
+        b = b.replace('&quot;',' ')
+        print(b)
+        with open ('T.txt','a',encoding="utf-8")as f:
+            f.write(b+'\n')
+    
+print('ok done')
+
+```
+****
+
 ****
 ## TASK 1 百度贴吧：某吧首推前几十页的帖子标题及回复 命名为标题.txt 写入内容为一回复加一换行 保存到原目录data文件夹内 代码量：23行
 ```python
